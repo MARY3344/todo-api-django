@@ -47,4 +47,6 @@ Thumbs.db
 *.env
 .env
 
+.idea
 .idea/
+idea/
