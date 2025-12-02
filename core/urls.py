@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from todo import views
+from todo.auth_views import register, login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/tasks/', views.task_list),
     path('api/tasks/<int:id>/', views.task_detail),
+
+    path('api/register/', register),
+    path('api/login/', login),
 
 ]

@@ -2,8 +2,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Task
 from .serializers import TaskSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def task_list(request):
     if request.method == 'GET':
         tasks = Task.objects.all()
@@ -20,6 +24,7 @@ def task_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def task_detail(request, id):
     try:
         task = Task.objects.get(id=id)
