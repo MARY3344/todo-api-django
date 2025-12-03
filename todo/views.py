@@ -10,7 +10,7 @@ from rest_framework.decorators import permission_classes
 @permission_classes([IsAuthenticated])
 def task_list(request):
     if request.method == 'GET':
-        tasks = Task.objects.all()
+        tasks = Task.objects.filter(user=request.user)
         print("tasks",tasks)
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)
@@ -18,7 +18,7 @@ def task_list(request):
     if request.method == 'POST':
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
@@ -27,7 +27,7 @@ def task_list(request):
 @permission_classes([IsAuthenticated])
 def task_detail(request, id):
     try:
-        task = Task.objects.get(id=id)
+        task = Task.objects.get(id=id, user=request.user)
     except Task.DoesNotExist:
         return Response({"error": "Task not found"}, status=404)
 
