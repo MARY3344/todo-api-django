@@ -42,6 +42,7 @@ def task_detail(request, id):
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
+
     if request.method == 'DELETE':
         task.delete()
         return Response({"message": "Task deleted successfully"}, status=204)
